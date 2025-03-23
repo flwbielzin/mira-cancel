@@ -12,8 +12,32 @@
     <div class="cancel-container">
         <h1>Pagamento Cancelado</h1>
         <p>O pagamento foi cancelado. Se você tiver alguma dúvida, entre em contato conosco.</p>
-        <a href="/" class="back-button">Tentar novamente</a>
+        <button id="retry-button" class="back-button">Tentar novamente</button>
     </div>
+
+    <script>
+        document.getElementById("retry-button").addEventListener("click", async () => {
+            const duration = 10; // Aqui você pode alterar para a duração que foi escolhida pelo usuário
+            try {
+                // Reenviar a solicitação para criar uma nova sessão de checkout
+                const response = await fetch("/mira/create-checkout-session", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ duration })
+                });
+
+                if (!response.ok) {
+                    throw new Error("Erro ao criar a sessão de checkout");
+                }
+
+                const session = await response.json();
+                window.location.href = session.url; // Redireciona para o checkout
+            } catch (error) {
+                console.error("Erro:", error);
+                alert("Ocorreu um erro ao tentar novamente. Por favor, tente novamente mais tarde.");
+            }
+        });
+    </script>
 </body>
 
 </html>
