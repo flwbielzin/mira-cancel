@@ -17,7 +17,7 @@
 
     <script>
         document.getElementById("retry-button").addEventListener("click", async () => {
-            const duration = 10; // Aqui você pode alterar para a duração que foi escolhida pelo usuário
+            const duration = 10; // Substitua pelo valor adequado ou utilize algo dinâmico (10, 15, 20, 30)
             try {
                 // Reenviar a solicitação para criar uma nova sessão de checkout
                 const response = await fetch("/mira/create-checkout-session", {
